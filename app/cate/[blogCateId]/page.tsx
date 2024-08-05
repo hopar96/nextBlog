@@ -2,12 +2,12 @@ import { log } from 'console';
 import { Pagination } from 'antd';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Blog } from '@prisma/client';
+import { AtFile, Blog } from '@prisma/client';
 import noImg from '/public/assets/img/noImg.jpg';
 import { Suspense } from 'react';
 import db from '../../../lib/db';
 import CustomPagination from '../../../components/pagination';
-import { formatToTimeAgo } from '../../../lib/constants';
+import { BASE_IMG_URL, formatToTimeAgo } from '../../../lib/constants';
 
 async function getBlogList({
   blogCateId,
@@ -24,6 +24,7 @@ async function getBlogList({
 
   const blogList = await db.blog.findMany({
     where: { use_yn: 'Y', blog_cate_id: blogCateId },
+    include: {mainAtFile: true},
     orderBy: { blog_id: 'desc' },
     take: limit,
     skip,
@@ -80,7 +81,11 @@ export default async function BlogList({
   );
 }
 
-function BlogLi({ blog }: { blog: Blog }) {
+type ISelectBlog  = Blog & {
+  mainAtFile: AtFile | null
+}
+
+function BlogLi({ blog }: { blog: ISelectBlog }) {
   return (
     <li>
       <div>
@@ -90,13 +95,13 @@ function BlogLi({ blog }: { blog: Blog }) {
           <div className="relative w-[30vw] max-w-[300px] h-[30vw] max-h-[300px]">
             <Image
               className='border-stone-300 border border-solid'
-              src={blog?.main_file_id ? `` : noImg.src}
+              src={blog?.mainAtFile ? BASE_IMG_URL + blog?.mainAtFile?.file_nm : noImg.src}
               alt="블로그 게시물의 대표 이미지"
               // width={300}
               // height={300}
               fill={true}
             />
-            {!blog?.main_file_id ? (
+            {!blog?.mainAtFile ? (
               <span
                 className="absolute top-2/4 left-2/4 text-5xl text-pink-400 -translate-x-2/4 -translate-y-2/4"
                 style={{ textShadow: '2px 2px 4px #eb2f96' }}>

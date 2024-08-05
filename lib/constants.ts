@@ -1,7 +1,8 @@
 import db from "./db";
 
 export const API_URL = 'https://nomad-movies.nomadcoders.workers.dev/movies'
-export const BASE_URL = 'https//www.isjustblog.com'
+export const BASE_URL = 'https://www.isjustblog.com'
+export const BASE_IMG_URL = 'https://img.isjustblog.com/'
 
 export const IntlUsDate = new Intl.DateTimeFormat('ko-KR', {
   dateStyle: 'medium', timeStyle:'short', timeZone: 'Asia/Seoul'

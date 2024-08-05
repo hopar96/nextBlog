@@ -134,7 +134,7 @@ model Blog {
   use_yn           String    @default("Y") @db.Char(1)
   blog_cate_id     BigInt
   blogCate        BlogCate @relation(fields: [blog_cate_id], references: [blog_cate_id], onDelete: NoAction, onUpdate: NoAction)
-  AtFile          AtFile?  @relation(fields: [main_file_id], references: [file_id])
+  mainAtFile          AtFile?  @relation(fields: [main_file_id], references: [file_id])
 	@@map("blog")
 }
 
