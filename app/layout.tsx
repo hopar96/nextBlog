@@ -28,6 +28,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1122134236443449"
+      crossOrigin="anonymous"></script>
+      </head>
       <body>
         <AntdRegistry>
           <div id="container">

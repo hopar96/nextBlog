@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Page from '../../../.next/server/vendor-chunks/next';
 import { getBlogListAndCnt } from '../actions';
 import { Blog } from '@prisma/client';
 import Link from 'next/link';
