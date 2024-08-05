@@ -1,9 +1,13 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { adjustDates, convertDateToUTC } from "./date_middleware";
 
 const singletonPrisma = () => {
+
+  let log: (Prisma.LogLevel | Prisma.LogDefinition)[] | undefined =
+    process.env.NODE_ENV !== 'production' ? ['query', 'info', 'warn', 'error'] : ['warn', 'error'];
+
   return new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'],
+    log: log
   })
 }
 declare global {
