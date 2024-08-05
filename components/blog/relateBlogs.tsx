@@ -68,7 +68,7 @@ export default async function RelateBlogs({ blogId, blogCateId }: { blogId: numb
 }
 
 type ISelectBlog  = Blog & {
-  mainAtFile?: AtFile
+  mainAtFile: AtFile | null
 }
 
 function BlogCard({ blog }: { blog: ISelectBlog }) {
