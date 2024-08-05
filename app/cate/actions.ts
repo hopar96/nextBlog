@@ -20,6 +20,7 @@ export async function getBlogListAndCnt({
   const blogList = await db.blog.findMany({
     where: { use_yn: 'Y', blog_cate_id: blogCateId },
     orderBy: { blog_id: 'desc' },
+    include: {mainAtFile: true},
     take: limit,
     skip,
     ...(lastId && { cursor: { blog_id: lastId } }),

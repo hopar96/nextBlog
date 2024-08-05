@@ -4,8 +4,8 @@ import Link from 'next/link';
 import db from '../../lib/db';
 import Image from 'next/image';
 import noImg from '/public/assets/img/noImg.jpg';
-import { formatToTimeAgo } from '../../lib/constants';
-import { Blog } from '@prisma/client';
+import { BASE_IMG_URL, formatToTimeAgo } from '../../lib/constants';
+import { AtFile, Blog, Prisma } from '@prisma/client';
 
 async function getRelateBlogs(blogId: number, blogCateId: number) {
   const relateBlogs = await db.blog.findMany({
@@ -13,6 +13,9 @@ async function getRelateBlogs(blogId: number, blogCateId: number) {
       AND: [{ blog_cate_id: blogCateId }, { blog_id: { not: blogId } }, { use_yn: 'Y' }],
     },
     // relationLoadStrategy: 'join',
+    include:{
+      mainAtFile : true
+    },
     take: 6,
     orderBy: { blog_id: 'asc' },
   });
@@ -26,7 +29,7 @@ async function getRecentBlog(blogId: number) {
       use_yn: 'Y',
     },
     include:{
-      AtFile: true
+      mainAtFile : true
     },
     // relationLoadStrategy: 'join',
     take: 6,
@@ -64,7 +67,11 @@ export default async function RelateBlogs({ blogId, blogCateId }: { blogId: numb
   );
 }
 
-function BlogCard({ blog }: { blog: Blog }) {
+type ISelectBlog  = Blog & {
+  mainAtFile?: AtFile
+}
+
+function BlogCard({ blog }: { blog: ISelectBlog }) {
 
   return (
     <li key={blog.blog_id}>
@@ -72,8 +79,12 @@ function BlogCard({ blog }: { blog: Blog }) {
         href={`/cate/${blog?.blog_cate_id}/blog/${blog?.blog_id}`}
         className="flex flex-col flex-wrap gap-y-1 items-start w-[200px]">
         <div className="relative w-[200px] h-[150px]">
-          <Image src={blog?.main_file_id ? `` : noImg.src} alt="블로그 게시물의 대표 이미지" fill={true}/>
-          {!blog?.main_file_id ? (
+          <Image
+            src={blog?.mainAtFile ? BASE_IMG_URL + blog?.mainAtFile?.file_nm : noImg.src}
+            alt="블로그 게시물의 대표 이미지"
+            fill={true}
+          />
+          {!blog?.mainAtFile ? (
             <span
               className="absolute top-2/4 left-2/4 text-5xl text-pink-400 -translate-x-2/4 -translate-y-2/4"
               style={{ textShadow: '2px 2px 4px #eb2f96' }}>
