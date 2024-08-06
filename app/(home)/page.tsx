@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { API_URL } from '../../lib/constants'
+import { redirect } from 'next/navigation'
+import BlogList from '../cate/page'
 
 export const metadata = {
   title: 'Home',
@@ -15,17 +17,7 @@ export default async function Home() {
   const movies = await getMovies()
 
   return (
-    <div>
-      {movies.map((movie: any) => (
-        <li key={movie.id}>
-          <Link className="underline" href={`/blog/${movie.id}`}>
-            {movie.title}
-          </Link>
-          {/* prefetch 미리 로딩  */}
-          {/* <Link prefetch href={`/blog/${movie.id}`}>{movie.title}</Link> */}
-        </li>
-      ))}
-    </div>
+   <BlogList />
   )
 }
 

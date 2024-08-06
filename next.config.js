@@ -7,9 +7,7 @@ const nextConfig = {
   /* config options here */
 
   images: {
-    remotePatterns: [{ protocol: 'https', hostname: 'img.isjustblog.com'},
-    ],
-    
+    remotePatterns: [{ protocol: 'https', hostname: 'img.isjustblog.com' }],
   },
 };
 

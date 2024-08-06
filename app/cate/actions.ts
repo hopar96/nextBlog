@@ -1,7 +1,11 @@
 'use server';
 
-import { Blog } from '@prisma/client';
+import { AtFile, Blog } from '@prisma/client';
 import db from '../../lib/db';
+
+type ISelectBlog  = Blog & {
+  mainAtFile: AtFile | null
+}
 
 export async function getBlogListAndCnt({
   blogCateId,
@@ -13,7 +17,7 @@ export async function getBlogListAndCnt({
   page: number;
   lastId?: number;
   limit?: number;
-}) : Promise<[Array<Blog>, number]>{
+}) : Promise<[Array<ISelectBlog>, number]>{
   const skip = page ? (page - 1) * limit : lastId ? 1 : 0;
 
   console.log('call function: getBlogListAndCnt')

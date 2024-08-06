@@ -1,5 +1,9 @@
-'use client'
+'use client';
 
 export default function Error() {
-  return <h1>lol something wrong..</h1>
+  return (
+    <div className="p-10">
+      <h1>lol something wrong..</h1>
+    </div>
+  );
 }
