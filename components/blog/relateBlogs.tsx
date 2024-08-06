@@ -4,7 +4,7 @@ import Link from 'next/link';
 import db from '../../lib/db';
 import Image from 'next/image';
 import noImg from '/public/assets/img/noImg.jpg';
-import { BASE_IMG_URL, formatToTimeAgo } from '../../lib/constants';
+import { BASE_IMG_URL, blurImage, formatToTimeAgo } from '../../lib/constants';
 import { AtFile, Blog, Prisma } from '@prisma/client';
 
 async function getRelateBlogs(blogId: number, blogCateId: number) {
@@ -16,7 +16,7 @@ async function getRelateBlogs(blogId: number, blogCateId: number) {
     include:{
       mainAtFile : true
     },
-    take: 6,
+    take: 4,
     orderBy: { blog_id: 'asc' },
   });
   return relateBlogs;
@@ -32,8 +32,8 @@ async function getRecentBlog(blogId: number) {
       mainAtFile : true
     },
     // relationLoadStrategy: 'join',
-    take: 6,
-    orderBy: { blog_id: 'asc' },
+    take: 4,
+    orderBy: { blog_id: 'desc' },
   });
   return recentBlogs;
 }
@@ -44,7 +44,7 @@ export default async function RelateBlogs({ blogId, blogCateId }: { blogId: numb
   return (
     <div className="mt-10 p-7">
       <div>
-        <h3>{`관련 글`}</h3>
+        <h3 className='font-semibold'>{`관련 글`}</h3>
         <div>
           <ul className="flex gap-1 flex-wrap">
             {relatedBlogs.map((blog) => (
@@ -53,8 +53,8 @@ export default async function RelateBlogs({ blogId, blogCateId }: { blogId: numb
           </ul>
         </div>
       </div>
-      <div>
-        <h3>{'최신 글'}</h3>
+      <div className='mt-10'>
+        <h3 className='font-semibold'>{'최신 글'}</h3>
         <div>
           <ul className="flex gap-1 flex-wrap">
             {recentBlogs.map((blog) => (
@@ -75,14 +75,18 @@ function BlogCard({ blog }: { blog: ISelectBlog }) {
 
   return (
     <li key={blog.blog_id}>
+      <div className='card-div'>
       <Link
         href={`/cate/${blog?.blog_cate_id}/blog/${blog?.blog_id}`}
         className="flex flex-col flex-wrap gap-y-1 items-start w-[200px]">
-        <div className="relative w-[200px] h-[150px]">
+        <div className="relative w-[200px] h-[200px] object-cover overflow-hidden">
           <Image
             src={blog?.mainAtFile ? BASE_IMG_URL + blog?.mainAtFile?.file_nm : noImg.src}
             alt="블로그 게시물의 대표 이미지"
-            fill={true}
+            width={200}
+            height={200}
+            placeholder={blurImage}
+            // fill={true}
           />
           {!blog?.mainAtFile ? (
             <span
@@ -93,11 +97,11 @@ function BlogCard({ blog }: { blog: ISelectBlog }) {
           ) : (
             ''
           )}
-          <div className="absolute bg-stone-400 bg-opacity-60 w-full h-auto bottom-0 left-0 flex flex-col content-center justify-end p-2">
-            <h3 className={'text-stone-800 w-full text-xl mb-2'}>{blog?.title}</h3>
+          <div className="absolute text-gray-300 bg-black bg-opacity-60 w-full h-auto bottom-0 left-0 flex flex-col content-center justify-end p-2">
+            <h3 className={'text-white w-full text-lg font-semibold mb-2 ellipsis'}>{blog?.title}</h3>
             {blog?.author_nm ? (
-              <span className={'text-[#eee] w-full text-sm mb-1'}>
-                <span className="text-[#eee] italic" style={{ fontFamily: 'Georgia, sans-serif' }}>
+              <span className={'w-full text-sm mb-1'}>
+                <span className="italic" style={{ fontFamily: 'Georgia, sans-serif' }}>
                   by
                 </span>
                 {` ${blog?.author_nm}`}
@@ -108,7 +112,7 @@ function BlogCard({ blog }: { blog: ISelectBlog }) {
             {blog?.reg_dt ? (
               <>
                 {/* <span className='text-[#959595]'>{IntlUsDate.format(blog?.reg_dt)}</span> */}
-                <span className="text-[#ddd] text-xs">{formatToTimeAgo(blog?.reg_dt.toString())}</span>
+                <span className="text-xs">{formatToTimeAgo(blog?.reg_dt.toString())}</span>
               </>
             ) : (
               ''
@@ -116,6 +120,7 @@ function BlogCard({ blog }: { blog: ISelectBlog }) {
           </div>
         </div>
       </Link>
+      </div>
     </li>
   );
 }

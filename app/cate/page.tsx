@@ -1,14 +1,37 @@
-import { log } from 'console';
-import { Pagination } from 'antd';
-import Link from 'next/link';
-import { Blog } from '@prisma/client';
-import noImg from '/public/assets/img/noImg.jpg';
 import { Suspense } from 'react';
+import { BASE_IMG_URL, BASE_URL } from '../../lib/constants';
 import db from '../../lib/db';
-import CustomPagination from '../../components/pagination';
-import { formatToTimeAgo } from '../../lib/constants';
 import CateBlog from './(component)/cateBlog';
+import { getBlogListAndCnt } from './actions';
+import { Metadata } from 'next';
 
+
+interface IParams {
+  params: { blogCateId: bigint };
+}
+
+export const generateMetadata = async ({ params: { blogCateId } }: IParams): Promise<Metadata> => {
+  const blogCateList = await getBlogCateList();
+  const [blogList] = await getBlogListAndCnt({ blogCateId, page: 1 });
+  blogList.splice(0, Math.min(blogList.length, 6));
+  const description =
+    blogCateList.map((item) => item.cate_nm).join(', ') + '의 주제로 다양하고 유익한 블로그 글들을 확인하세요.';
+
+  const ogImages = blogList.map((blog) => BASE_IMG_URL + blog.mainAtFile?.file_nm).filter((url) => url !== BASE_IMG_URL);
+
+  return {
+    title: 'IsJustBlog의 카테고리의 블로그 글',
+    description: description,
+    openGraph: {
+      type: 'website',
+      url: BASE_URL + '/cate',
+      title: 'IsJustBlog의 카테고리',
+      description: description,
+      siteName: 'Is Just Blog',
+      images: ogImages,
+    },
+  };
+};
 
 async function getBlogCateList() {
   const blogCateList = await db.blogCate.findMany({
@@ -19,10 +42,9 @@ async function getBlogCateList() {
 
 export default async function BlogList() {
   const blogCateList = await getBlogCateList();
-  console.log(blogCateList);
 
   return (
-    <div className="p-5 pt-28 lg:pt-0" >
+    <div className="p-[3vw] pt-10 lg:pt-0" >
       {blogCateList.map((item) => (
         <CateBlog key={item.blog_cate_id} blogCateId={item.blog_cate_id} blogCateNm={item.cate_nm} />
       ))}

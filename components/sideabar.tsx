@@ -8,7 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import React, { useEffect, useState } from 'react';
 
-export default function SideBar() {
+export default function SideBar({ isMobile }: { isMobile: boolean }) {
   const router = useRouter();
   const pathname = usePathname();
   /* const items = [
@@ -29,7 +29,7 @@ export default function SideBar() {
       setSelectKey(
         selectedCateId.indexOf('/') == -1 ? selectedCateId : selectedCateId.substring(0, selectedCateId.indexOf('/')),
       );
-    }else{
+    } else {
       setSelectKey('');
     }
   }, [pathname]);
@@ -48,15 +48,16 @@ export default function SideBar() {
   ];
 
   const onClickMenu = (props: any) => {
-    console.log(props);
+    // console.log(props);
     router.push(`/cate/${props.key}`);
   };
-
 
   return (
     <Sider
       breakpoint="lg"
       collapsedWidth="0"
+      defaultCollapsed={isMobile}
+      zeroWidthTriggerStyle={{ opacity: '0.6', top: '10px' }}
       /* onBreakpoint={(broken) => {
         console.log(broken);
       }}
