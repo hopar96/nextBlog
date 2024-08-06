@@ -9,7 +9,7 @@ const robots = (): MetadataRoute.Robots => {
       // allow: '/',
       // disallow: '/private/',
     },
-    sitemap: 'https://www.isjust.blog/sitemap/0.xml',
+    sitemap: 'https://www.isjustblog.com/sitemap/0.xml',
   }
 }
 
