@@ -7,8 +7,46 @@ import noImg from '/public/assets/img/noImg.jpg';
 import { Suspense } from 'react';
 import db from '../../../lib/db';
 import CustomPagination from '../../../components/pagination';
-import { BASE_IMG_URL, blurImage, formatToTimeAgo } from '../../../lib/constants';
+import { BASE_IMG_URL, BASE_URL, blurImage, formatToTimeAgo } from '../../../lib/constants';
 import BlogListCpnt from '../../../components/blog/blogList';
+import { Metadata } from 'next';
+
+interface Iparams {
+  searchParams: { page?: number; limit?: number };
+  params: { blogCateId: number };
+}
+
+export const generateMetadata = async ({
+  searchParams: { page = 1, limit = 12 },
+  params: { blogCateId },
+}: Iparams): Promise<Metadata> => {
+  const blogList = await getBlogList({ page, limit, blogCateId });
+  const blogCate = await getBlogCate(blogCateId);
+  blogList.splice(0, Math.min(blogList.length, 6));
+  const description = blogCate?.cate_nm + '의 다양하고 유익한 블로그 글들을 확인하세요.';
+
+  const ogImages = blogList
+    .map((blog) => BASE_IMG_URL + blog.mainAtFile?.file_nm)
+    .filter((url) => url !== BASE_IMG_URL);
+
+  return {
+    title: 'IsJustBlog의 카테고리의 블로그 리스트',
+    description: description,
+    keywords: [blogCate?.cate_nm ?? '', '블로그', '카테고리', '주제'],
+    publisher: null,
+    openGraph: {
+      type: 'website',
+      url: BASE_URL + '/cate',
+      title: 'IsJustBlog의 카테고리',
+      description: description,
+      siteName: 'Is Just Blog',
+      images: ogImages,
+    },
+    alternates: {
+      canonical: `${BASE_URL}/cate/${blogCateId}`,
+    },
+  };
+};
 
 async function getBlogList({
   blogCateId,
@@ -25,7 +63,7 @@ async function getBlogList({
 
   const blogList = await db.blog.findMany({
     where: { use_yn: 'Y', blog_cate_id: blogCateId },
-    include: {mainAtFile: true},
+    include: { mainAtFile: true },
     orderBy: { blog_id: 'desc' },
     take: limit,
     skip,
@@ -49,28 +87,35 @@ async function getBlogCate(blogCateId: number) {
   return blogCate;
 }
 
-export default async function BlogList({
-  searchParams: { page = 1, limit = 12 },
-  params: { blogCateId },
-}: {
-  searchParams: { page?: number; limit?: number };
-  params: { blogCateId: number };
-}) {
-  
+export default async function BlogList({ searchParams: { page = 1, limit = 12 }, params: { blogCateId } }: Iparams) {
   const [blogList, blogCnt, blogCate] = await Promise.all([
     getBlogList({ page, limit, blogCateId: blogCateId }),
     getBlogCnt(blogCateId),
     getBlogCate(blogCateId),
   ]);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@id': BASE_URL,
+    '@type': 'itemList',
+    itemListElement: blogList?.map((blog) => {
+      return {
+        '@type': 'ListItem',
+        name: blog.title,
+        image: BASE_IMG_URL + blog.main_file_id,
+      };
+    }),
+  };
+
   return (
     <div className="p-[3vw] pt-10 lg:pt-0">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className="border-b-2 border-solid border-stone-300 mb-4">
         <h1 className="mb-2 px-4">
           <b>{blogCate?.cate_nm}</b>
         </h1>
       </div>
-      <ul className={'flex flex-wrap gap-x-[1.5vw] gap-y-4 justify-left'}>
+      <ul className={'flex flex-wrap gap-x-[1.5vw] gap-y-4 justify-center'}>
         {blogList.map((blog) => (
           <BlogListCpnt key={blog.blog_id} blog={blog} />
         ))}

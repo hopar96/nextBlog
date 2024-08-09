@@ -11,12 +11,14 @@ type Iparams = {
   blogCateId: bigint;
   blogCateNm: string;
   limit?: number;
+  presetBlogList?: Blog[];
+  presetBlogCnt?: number;
 };
 
-const CateBlog = ({ blogCateId, blogCateNm, limit = 6 }: Iparams) => {
+const CateBlog = ({ blogCateId, blogCateNm, limit = 6, presetBlogList, presetBlogCnt }: Iparams) => {
   const [page, setPage] = useState(1);
-  const [blogList, setBlogList] = useState<Array<Blog>>([]);
-  const [blogCnt, setBlogCnt] = useState(0);
+  const [blogList, setBlogList] = useState<Array<Blog>>(presetBlogList || []);
+  const [blogCnt, setBlogCnt] = useState(presetBlogCnt || 0);
 
   useEffect(() => {
     const fetchBlog = async () =>{
@@ -26,7 +28,9 @@ const CateBlog = ({ blogCateId, blogCateNm, limit = 6 }: Iparams) => {
       });
       setBlogCnt(tmpBlogCnt);
     }
-    fetchBlog();
+    if(page != 1){
+      fetchBlog();
+    }
   }, [page]);
 
   const onClickMoreBtn = (page:number) => {
@@ -54,7 +58,7 @@ const CateBlog = ({ blogCateId, blogCateNm, limit = 6 }: Iparams) => {
               ''
             )}
           </div>
-          <ul className={'flex flex-wrap gap-x-[1.5vw] gap-y-4 justify-left'}>
+          <ul className={'flex flex-wrap gap-x-[1.5vw] gap-y-4 justify-center'}>
             {blogList.map((blog) => (
               <BlogListCpnt key={blog.blog_id} blog={blog} />
             ))}

@@ -2,10 +2,11 @@ import Title from 'antd/lib/typography/Title';
 import db from '../../lib/db';
 import styles from '../../styles/blogContents.module.css';
 import noImg from '/public/assets/img/noImg.jpg';
-import { API_URL, IntlKoNumber, formatToTimeAgo } from '../../lib/constants';
+import { API_URL, BASE_IMG_URL, BASE_URL, IntlKoNumber, formatToTimeAgo } from '../../lib/constants';
 import Link from 'next/link';
-import { UserOutlined, CalendarOutlined,EyeOutlined } from '@ant-design/icons';
+import { UserOutlined, CalendarOutlined, EyeOutlined } from '@ant-design/icons';
 import { Blog, BlogCate } from '@prisma/client';
+import RelateBlogs from './relateBlogs';
 
 export async function getBlog(blogId: number, blogCateId: number, updateFlg: boolean = false) {
   try {
@@ -39,9 +40,39 @@ export async function getBlog(blogId: number, blogCateId: number, updateFlg: boo
 
 export default async function BlogContents({ blogCateId, blogId }: { blogId: number; blogCateId: number }) {
   const blog = await getBlog(blogId, blogCateId, true);
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@id': BASE_URL,
+    '@type': 'BlogPosting',
+    headline: blog?.title,
+    author: {
+      '@type': 'Person',
+      name: blog?.author_nm,
+      // "url": "https://example.com/author-profile"
+    },
+    genre: blog?.blogCate.cate_nm, // 예: "기술", "건강", "여행" 등
+    keywords: blog?.keywords ?? blog?.title?.replaceAll(' ', ', '),
+    publisher: {
+      '@type': 'Organization',
+      name: 'IsJustBlog',
+      logo: {
+        '@type': 'ImageObject',
+        url: BASE_URL + '/favicon.ico',
+      },
+    },
+    url: 'https://example.com/blog-post-url',
+    datePublished: blog?.reg_dt,
+    dateModified: blog?.upd_dt,
+    description: blog?.description,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${BASE_URL}/cate/${blogCateId}/blog/${blogId}`,
+    },
+  };
 
   return (
     <div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {blog ? <ContentHeader blog={blog} blogCate={blog?.blogCate} /> : <></>}
       <div className="p-7" dangerouslySetInnerHTML={{ __html: blog?.content ?? '' }}></div>
       <div>{blog?.description}</div>
