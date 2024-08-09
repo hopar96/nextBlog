@@ -14,8 +14,8 @@ const BlogListCpnt = ({ blog }: { blog: ISelectBlog }) => {
       <div className="card-div">
         <Link
           href={`/cate/${blog?.blog_cate_id}/blog/${blog?.blog_id}`}
-          className="flex flex-col flex-wrap gap-y-1 items-start w-[30vw] max-w-[300px]">
-          <div className="relative w-[30vw] max-w-[300px] h-[30vw] max-h-[300px] object-cover overflow-hidden">
+          className="flex flex-col flex-wrap gap-y-1 items-start w-[29.5vw] max-w-[300px]">
+          <div className="relative w-[29.5vw] max-w-[300px] h-[29.5vw] max-h-[300px] object-cover overflow-hidden">
             <Image
               // className='border-stone-300 border border-solid'
               src={blog?.mainAtFile ? BASE_IMG_URL + blog?.mainAtFile?.file_nm : noImg.src}
