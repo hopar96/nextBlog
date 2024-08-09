@@ -38,7 +38,7 @@ export default function SideBar({ isMobile }: { isMobile: boolean }) {
     {
       key: String(1),
       icon: React.createElement(SmileOutlined),
-      label: `썰/잡담`,
+      label: `유머`,
     },
     {
       key: String(2),
