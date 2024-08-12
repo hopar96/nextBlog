@@ -116,9 +116,15 @@ export default async function BlogList({ searchParams: { page = 1, limit = 12 },
         </h1>
       </div>
       <ul className={'flex flex-wrap gap-x-[1.5vw] gap-y-4 justify-center'}>
-        {blogList.map((blog) => (
+        {blogList.length > 0 ? 
+        blogList.map((blog) => (
           <BlogListCpnt key={blog.blog_id} blog={blog} />
-        ))}
+        ))
+      : <div className='flex self-center justify-center'>
+        <h3 className="text-stone-400">컨텐츠가 없습니다.</h3>
+      </div>
+      }
+        
       </ul>
       <div className="flex justify-center mt-5">
         <CustomPagination url={`/cate/${blogCateId}`} total={blogCnt} current={page} pageSize={limit} />

@@ -45,6 +45,56 @@ export default function SideBar({ isMobile }: { isMobile: boolean }) {
       icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🙆‍♂️' } }),
       label: `노하우`,
     },
+    {
+      key: String(3),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '' } }),
+      label: `스토리`,
+    },
+    {
+      key: String(4),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🎬' } }),
+      label: `연예가이슈`,
+    },
+    {
+      key: String(5),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '👨‍⚖️' } }),
+      label: `정치`,
+    },
+    {
+      key: String(6),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '💰' } }),
+      label: `경제`,
+    },
+    {
+      key: String(7),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '' } }),
+      label: `사회`,
+    },
+    {
+      key: String(8),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🥊' } }),
+      label: `사건사고`,
+    },
+    {
+      key: String(9),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '⚽️' } }),
+      label: `스포츠`,
+    },
+    {
+      key: String(10),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🐶' } }),
+      label: `애완동물`,
+    },
+    {
+      key: String(11),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '👨🏻‍🦱🎬' } }),
+      label: `해외연예`,
+    },
+    {
+      key: String(12),
+      icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '' } }),
+      label: `해외뉴스`,
+    },
   ];
 
   const onClickMenu = (props: any) => {

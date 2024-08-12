@@ -32,7 +32,7 @@ export const generateMetadata = async ({ params: { blogCateId } }: IParams): Pro
     .filter((url) => url !== BASE_IMG_URL);
 
   return {
-    title: 'IsJustBlog의 카테고리의 블로그 리스트',
+    title: '카테고리 리스트와 블로그 게시물들',
     description: description,
     keywords: [...blogCateList.map((item) => item.cate_nm), '블로그', '카테고리', '주제'],
     publisher: null,
