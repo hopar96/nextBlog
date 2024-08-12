@@ -10,13 +10,25 @@ export async function generateSitemaps() {
 
 export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
-  const start = id * 50000;
-  const end = start + 50000;
+  const start = id * 49000;
+  const end = start + 49000;
+  const blogCateList = await getBlogCateList();
   const blogList = await getBlogList({ start, end });
-  return blogList.map((blog: Blog) => ({
-    url: `${BASE_URL}/cate/${blog.blog_cate_id}/blog/${blog.blog_id}`,
-    lastModified: blog.reg_dt ?? undefined,
-  }));
+  const defaultList = id === 0 ? [
+    {url: `${BASE_URL}`},
+    {url: `${BASE_URL}/cate`},
+  ] : [];
+
+  const cateUrlList = id === 0 ? blogCateList.map((blogCate) => ({
+    url: `${BASE_URL}/cate/${blogCate.blog_cate_id}`
+  })) : [];
+
+  return [ ...cateUrlList,...defaultList,
+    ...blogList.map((blog: Blog) => ({
+      url: `${BASE_URL}/cate/${blog.blog_cate_id}/blog/${blog.blog_id}`,
+      lastModified: blog.reg_dt ?? undefined,
+    }))
+  ];
 }
 
 async function getBlogList({ start, end }: { start: number; end: number }) {
@@ -32,4 +44,15 @@ async function getBlogList({ start, end }: { start: number; end: number }) {
   });
 
   return blogList;
+}
+
+async function getBlogCateList() {
+  const blogCateList = await db.blogCate.findMany({
+    where: {
+      use_yn: 'Y',
+    },
+    orderBy: { ord: 'asc' },
+  });
+
+  return blogCateList;
 }
