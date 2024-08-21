@@ -50,11 +50,11 @@ export default function FindIpPage() {
   return (
     <>
       {contextHolder}
-      <div className="p-20 w-[100%]">
+      <div className="lg:p-20 w-[100%] px-2 py-10">
         <div className="flex justify-center items-center w-[100%] box">
           <div className="">
             <div>
-              <Title className="text-center" level={1}>
+              <Title className="text-center lg:text-5xl text-2xl" level={2}>
                 내 IP 주소는?
               </Title>
             </div>
@@ -62,7 +62,7 @@ export default function FindIpPage() {
               {ip ? (
                 <Result
                   status="success"
-                  title={<span>{ip} <span onClick={copyIp} className={'cursor-pointer'}>📋</span></span>}
+                  title={<span className='break-all lg:text-2xl text-lg'>{ip} <span onClick={copyIp} className={'cursor-pointer'}>📋</span></span>}
                   subTitle="성공적으로 IP를 찾았습니다."
                   extra={[
                     <Button type="primary" key="console" onClick={loadIp}>
