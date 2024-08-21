@@ -5,7 +5,7 @@
 
 html, h1, h2, h3, h4, h5, :not(pre) > code, textarea, table {
   /* background-color: black; */
-  font-family: RegularFont, NanumGothic, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'
     
   /* color: white; */
 }
@@ -619,4 +619,13 @@ b,i,strong,em,blockquote,p,q,span,figure,img,h1,h2,header,input,a,tr,td,.highlig
     transform: translateY(0) !important;
     -webkit-transition: transform 0.4s, box-shadow 0.4s !important;
     transition: transform 0.4s, box-shadow 0.4s !important;
+}
+
+.box{
+  color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: Arial, sans-serif;
 }

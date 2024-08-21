@@ -10,14 +10,24 @@ import { Header, Content, Footer } from 'antd/lib/layout/layout'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import { headers } from 'next/headers'
 import {UAParser} from 'ua-parser-js'
+import { IpMetadata } from '../lib/constants'
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s',
-    default: 'Home',
-  },
-  description: 'IsJustBlog is just blog made by nextJs created by LHJ',
+export const metadata = () => {
+  const { get } = headers();
+  console.log(get('x-original-url'));
+  if(get('x-original-url')?.indexOf('/tools/ip') != -1){
+    return IpMetadata;
+  }
+
+  return {
+    title: {
+      template: '%s',
+      default: 'Home',
+    },
+    description: 'IsJustBlog is just blog made by nextJs created by LHJ',
+  };
 }
+  
 export default async function RootLayout({
   children
 }: {

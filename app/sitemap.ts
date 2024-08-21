@@ -12,23 +12,26 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
   // Google's limit is 50,000 URLs per sitemap
   const start = id * 49000;
   const end = start + 49000;
-  const blogCateList = await getBlogCateList();
-  const blogList = await getBlogList({ start, end });
+  // const blogCateList = await getBlogCateList();
+  // const blogList = await getBlogList({ start, end });
   const defaultList = id === 0 ? [
     {url: `${BASE_URL}`},
-    {url: `${BASE_URL}/cate`},
+    // {url: `${BASE_URL}/cate`},
+    {url: `${BASE_URL}/tools/ip`},
   ] : [];
 
-  const cateUrlList = id === 0 ? blogCateList.map((blogCate) => ({
-    url: `${BASE_URL}/cate/${blogCate.blog_cate_id}`
-  })) : [];
+  // const cateUrlList = id === 0 ? blogCateList.map((blogCate) => ({
+  //   url: `${BASE_URL}/cate/${blogCate.blog_cate_id}`
+  // })) : [];
 
-  return [ ...cateUrlList,...defaultList,
+  /* return [ ...cateUrlList,...defaultList,
     ...blogList.map((blog: Blog) => ({
       url: `${BASE_URL}/cate/${blog.blog_cate_id}/blog/${blog.blog_id}`,
       lastModified: blog.reg_dt ?? undefined,
     }))
-  ];
+  ]; */
+
+  return defaultList;
 }
 
 async function getBlogList({ start, end }: { start: number; end: number }) {
