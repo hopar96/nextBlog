@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Link from 'next/link';
 import { API_URL } from '../../lib/constants';
@@ -20,11 +20,11 @@ import Title from 'antd/es/typography/Title';
 
 export default function Home() {
   // const movies = await getMovies()
-  const router = useRouter()
+  const router = useRouter();
 
   const onClickMenu = (props: any) => {
     let url;
-    if(props.children && props.children.length > 0){
+    if (props.children && props.children.length > 0) {
       return;
     }
     if (isNaN(props.key)) {
@@ -37,19 +37,28 @@ export default function Home() {
 
   return (
     <>
-    <div className='p-20'>
-      <Title level={1}>대시보드</Title>
-      <div className='w-[100%] grid-cols-4'>
-      <div>
-        {menuItems.map((menu) => (
-          <Card title={menu.label} bordered={true} style={{ width: 300 }} onClick={() => onClickMenu(menu)}>
-            {menu.children && menu.children.length > 0
-              ? menu.children.map((child) => <p className='cursor-pointer' onClick={() => onClickMenu(child)}>{child.label}</p>)
-              : ''}
-          </Card>
-        ))}
-      </div>
-      </div>
+      <div className="p-20">
+        <Title level={1}>대시보드</Title>
+        <div className="w-[100%] grid-cols-4">
+          <div>
+            {menuItems.map((menu, idx) => (
+              <Card
+                key={idx}
+                title={menu.label}
+                bordered={true}
+                style={{ width: 300 }}
+                onClick={() => onClickMenu(menu)}>
+                {menu.children && menu.children.length > 0
+                  ? menu.children.map((child, cIdx) => (
+                      <p key={cIdx} className="cursor-pointer" onClick={() => onClickMenu(child)}>
+                        {child.label}
+                      </p>
+                    ))
+                  : ''}
+              </Card>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

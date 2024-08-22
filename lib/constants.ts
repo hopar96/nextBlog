@@ -54,12 +54,48 @@ export const IpMetadata: Metadata = {
   ],
   openGraph: {
     type: 'website',
-    url: BASE_URL + '/cate',
+    url: BASE_URL + '/tools/ip',
     title: '내 IP 찾기',
     description: '간단하게 내 IP를 찾을 수 있습니다.',
     siteName: 'Is Just Blog',
   },
   alternates: {
     canonical: `${BASE_URL}/tools/ip`,
+  },
+};
+
+export const PixelMetadata: Metadata = {
+  title: '죽은 픽셀 살리기',
+  description: '죽은 픽셀 (Dead pixel)을 사용법에 따라 살릴 수 있습니다.',
+  
+  keywords: [
+    '내',
+    '나의',
+    '스마트폰',
+    '핸드폰',
+    '픽셀',
+    'pixel',
+    '죽은 픽셀',
+    'dead pixel',
+    'stuck pixel',
+    '살리기',
+    '고치기',
+    '해결',
+    'solve',
+    '방법',
+    '유용한 도구',
+    'useful tools',
+    '도구 모음',
+    'tool box',
+  ],
+  openGraph: {
+    type: 'website',
+    url: BASE_URL + '/tools/fixPixel',
+    title: '죽은 픽셀 살리기',
+    description: '죽은 픽셀 (Dead pixel)을 사용법에 따라 살릴 수 있습니다.',
+    siteName: 'Is Just Blog',
+  },
+  alternates: {
+    canonical: `${BASE_URL}/tools/fixPixel`,
   },
 };

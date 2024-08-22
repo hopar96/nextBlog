@@ -84,6 +84,11 @@ export const menuItems = [
         key: '/tools/ip',
         icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '📡' } }),
         label: `내 IP`,
+      },
+      {
+        key: '/tools/fixPixel',
+        icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🖥️' } }),
+        label: `죽은픽셀 살리기`,
       }
     ]
   },
