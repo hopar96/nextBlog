@@ -18,6 +18,7 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
     {url: `${BASE_URL}`},
     // {url: `${BASE_URL}/cate`},
     {url: `${BASE_URL}/tools/ip`},
+    {url: `${BASE_URL}/tools/fixPixel`},
   ] : [];
 
   // const cateUrlList = id === 0 ? blogCateList.map((blogCate) => ({
