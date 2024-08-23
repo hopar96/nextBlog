@@ -4,6 +4,7 @@ import { MouseEventHandler, useCallback, useEffect, useRef, useState } from 'rea
 import { Button, Result, message } from 'antd';
 import CustomLoading from '../../../components/custom-loading';
 import Title from 'antd/es/typography/Title';
+import { log } from 'console';
 
 const colors = ['#000000', '#ff0000', '#00ff00', '#0000ff', '#ffffff'];
 
@@ -81,7 +82,7 @@ export default function FixPixelPage() {
   const onClickStart = () => {
     setStartFlg(true);
     setIntervalFunc(setInterval(drawRandomPixels, 10));
-    if (containerRef.current == null || canvasRef.current == null ) return;
+    if (containerRef.current == null || canvasRef.current == null) return;
 
     containerRef.current.style.position = 'fixed';
     containerRef.current.style.top = '0';
@@ -98,7 +99,7 @@ export default function FixPixelPage() {
     setStartFlg(false);
     setShowStop(false);
     clearInterval(intervalFunc ?? undefined);
-    if (containerRef.current == null || canvasRef.current == null ) return;
+    if (containerRef.current == null || canvasRef.current == null) return;
 
     containerRef.current.style.position = 'relative';
     containerRef.current.style.height = '200px';
@@ -197,6 +198,7 @@ export default function FixPixelPage() {
 
   const onTSCanvas = useCallback(
     (e: TouchEvent) => {
+      console.log(11);
       const canvas: HTMLCanvasElement | null = canvasRef.current;
       if (canvas) {
         const rect = canvas.getBoundingClientRect();
@@ -205,10 +207,11 @@ export default function FixPixelPage() {
         setIsDragging(true);
       }
     },
-    [ctx],
+    [ctx, isDragging],
   );
 
   const onTMCanvas = useCallback((e: TouchEvent) => {
+    console.log('isDragging ',isDragging);
     if (isDragging) {
       const canvas: HTMLCanvasElement | null = canvasRef.current;
       if (canvas) {
@@ -218,7 +221,7 @@ export default function FixPixelPage() {
         canvas.style.top = e.touches[0].clientY - dragStartY + 'px';
       }
     }
-  }, []);
+  }, [ctx,isDragging]);
 
   const onTECanvas = useCallback(() => {
     setIsDragging(false);
@@ -249,7 +252,12 @@ export default function FixPixelPage() {
                 display: showStop ? 'unset' : 'none',
               }}>
               <Button onClick={onClickChangeColor}>색상변경</Button>
-              <Button  className='ml-5' style={{backgroundColor: 'red', color: 'white', border: 'none'}} onClick={onClickStop}>종료하기</Button>
+              <Button
+                className="ml-5"
+                style={{ backgroundColor: 'red', color: 'white', border: 'none' }}
+                onClick={onClickStop}>
+                종료하기
+              </Button>
             </div>
             <Title level={5} className="text-stone-600">
               {`죽은 픽셀 살리는 방법 : \n1. 기기의 자동 잠금 설정과 화면보호기를 꺼주세요. 지속적인 픽셀에 대한 자극이필요합니다.\n2. 시작하기 버튼을 누르면 까만색의 화면 안에 깜빡이는 점을 드래그하여 배드 픽셀이 있는 곳으로움직이세요.\n3. 죽은 픽셀 부분에 많은 자극이 필요함으로 20분 이상 시도 할 것을 추천합니다.\n4. 아무곳이나 클릭하면 멈출 수 있는 버튼과 색상 변경버튼이 나옵니다.`}
@@ -258,7 +266,10 @@ export default function FixPixelPage() {
               시작하기
             </Button>
             <div className="flex justify-center items-center ">
-              <div ref={containerRef} className={`h-[200px] w-[200px] relative`} style={{backgroundColor: colors[bgColorIdx]}}>
+              <div
+                ref={containerRef}
+                className={`h-[200px] w-[200px] relative`}
+                style={{ backgroundColor: colors[bgColorIdx] }}>
                 <canvas ref={canvasRef} width={50} height={50} className="absolute left-0" />
               </div>
             </div>
