@@ -84,6 +84,11 @@ export default function FixPixelPage() {
     setIntervalFunc(setInterval(drawRandomPixels, 10));
     if (containerRef.current == null || canvasRef.current == null) return;
 
+    const body = document.querySelector('body');
+    if(body != null && body.style){
+      body.style.overflow = 'hidden';
+    }
+    
     containerRef.current.style.position = 'fixed';
     containerRef.current.style.top = '0';
     containerRef.current.style.left = '0';
@@ -100,6 +105,11 @@ export default function FixPixelPage() {
     setShowStop(false);
     clearInterval(intervalFunc ?? undefined);
     if (containerRef.current == null || canvasRef.current == null) return;
+
+    const body = document.querySelector('body');
+    if(body != null && body.style){
+      body.style.overflow = 'unset';
+    }
 
     containerRef.current.style.position = 'relative';
     containerRef.current.style.height = '200px';
@@ -198,7 +208,6 @@ export default function FixPixelPage() {
 
   const onTSCanvas = useCallback(
     (e: TouchEvent) => {
-      console.log(11);
       const canvas: HTMLCanvasElement | null = canvasRef.current;
       if (canvas) {
         const rect = canvas.getBoundingClientRect();
@@ -211,7 +220,6 @@ export default function FixPixelPage() {
   );
 
   const onTMCanvas = useCallback((e: TouchEvent) => {
-    console.log('isDragging ',isDragging);
     if (isDragging) {
       const canvas: HTMLCanvasElement | null = canvasRef.current;
       if (canvas) {
