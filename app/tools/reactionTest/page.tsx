@@ -130,7 +130,7 @@ export default function ReactionTestPage() {
             <div>
               <div
                 onClick={onClickButton}
-                className={`flex justify-center items-center flex-col lg:h-[500px] h-[40vh] w-full box ${getBgColor(testStatus)}`}>
+                className={`flex justify-center items-center flex-col cursor-pointer lg:h-[500px] h-[40vh] w-full box ${getBgColor(testStatus)}`}>
                 <Title className="text-center lg:text-5xl text-2xl" style={{ color: '#ffffff' }} level={2}>
                   {getMainText(testStatus)}
                 </Title>
