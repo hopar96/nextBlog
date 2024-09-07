@@ -29,18 +29,16 @@ export default function SideBar({ isMobile }: { isMobile: boolean }) {
       setSelectKey(
         selectedCateId.indexOf('/') == -1 ? selectedCateId : selectedCateId.substring(0, selectedCateId.indexOf('/')),
       );
-    } else if(pathname.startsWith('/tools')){
+    } else if (pathname.startsWith('/tools')) {
       setSelectKey(pathname.split('?')[0]);
     }
   }, [pathname]);
 
-  
-
   const onClickMenu = (props: any) => {
     let url;
-    if(isNaN(props.key)){
+    if (isNaN(props.key)) {
       url = props.key;
-    }else{
+    } else {
       url = `/cate/${props.key}`;
     }
     router.push(url);
@@ -60,7 +58,7 @@ export default function SideBar({ isMobile }: { isMobile: boolean }) {
       }} */
     >
       <div className="logo-area flex items-center justify-center w-full">
-        <Link href={'/cate'}>
+        <Link href={'/'}>
           <span className="logo">Is Just Blog</span>
         </Link>
       </div>
@@ -83,14 +81,19 @@ export const menuItems = [
       {
         key: '/tools/ip',
         icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '📡' } }),
-        label: `내 IP`,
+        label: `내 IP 확인`,
       },
       {
         key: '/tools/fixPixel',
         icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🖥️' } }),
         label: `죽은픽셀 살리기`,
-      }
-    ]
+      },
+      {
+        key: '/tools/reactionTest',
+        icon: React.createElement('span', { dangerouslySetInnerHTML: { __html:  '👴🏻'} }),
+        label: `반응속도 테스트`,
+      },
+    ],
   },
   /* {
     key: String(1),

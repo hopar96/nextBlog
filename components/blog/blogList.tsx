@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from 'next/image';
 import { AtFile, Blog } from "@prisma/client";
-import { BASE_IMG_URL, blurImage, formatToTimeAgo } from "../../lib/constants";
+import { BASE_IMG_URL, blurImage } from "../../lib/constants";
 import noImg from '/public/assets/img/noImg.jpg';
+import { formatToTimeAgo } from "../../lib/utils";
 
 type ISelectBlog  = Blog & {
   mainAtFile?: AtFile | null

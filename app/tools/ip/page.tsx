@@ -1,7 +1,5 @@
 'use client';
 
-import { Metadata } from 'next';
-import { BASE_URL } from '../../../lib/constants';
 import { useEffect, useState } from 'react';
 import { Button, Result, message } from 'antd';
 import CustomLoading from '../../../components/custom-loading';
@@ -18,7 +16,7 @@ export default function FindIpPage() {
   }, []);
 
   const loadIp = () => {
-    fetch('https://api64.ipify.org?format=json')
+    fetch('https://api4.ipify.org?format=json')
       .then((response) => response.json())
       .then((data) => {
         console.log('사용자 IP 주소:', data.ip);
