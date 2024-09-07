@@ -2,11 +2,12 @@ import Title from 'antd/lib/typography/Title';
 import db from '../../lib/db';
 import styles from '../../styles/blogContents.module.css';
 import noImg from '/public/assets/img/noImg.jpg';
-import { API_URL, BASE_IMG_URL, BASE_URL, IntlKoNumber, formatToTimeAgo } from '../../lib/constants';
+import { API_URL, BASE_IMG_URL, BASE_URL, IntlKoNumber } from '../../lib/constants';
 import Link from 'next/link';
 import { UserOutlined, CalendarOutlined, EyeOutlined } from '@ant-design/icons';
 import { Blog, BlogCate } from '@prisma/client';
 import RelateBlogs from './relateBlogs';
+import { formatToTimeAgo } from '../../lib/utils';
 
 export async function getBlog(blogId: number, blogCateId: number, updateFlg: boolean = false) {
   try {

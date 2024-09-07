@@ -36,11 +36,11 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   
-  const colorBgContainer = '#fff'
-  const borderRadiusLG = '0.8'
+  const colorBgContainer = '#fff';
+  const borderRadiusLG = '0.8';
 
-  const { get } = headers()
-  const ua = get('user-agent')
+  const { get } = headers();
+  const ua = get('user-agent');
   const device = new UAParser(ua || '').getDevice();
   const isMobile = device.type === 'mobile';
 

@@ -4,8 +4,9 @@ import Link from 'next/link';
 import db from '../../lib/db';
 import Image from 'next/image';
 import noImg from '/public/assets/img/noImg.jpg';
-import { BASE_IMG_URL, BASE_URL, blurImage, formatToTimeAgo } from '../../lib/constants';
+import { BASE_IMG_URL, BASE_URL, blurImage } from '../../lib/constants';
 import { AtFile, Blog, Prisma } from '@prisma/client';
+import { formatToTimeAgo } from '../../lib/utils';
 
 export async function getRelateBlogs(blogId: number, blogCateId: number) {
   const relateBlogs = await db.blog.findMany({

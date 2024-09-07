@@ -7,7 +7,7 @@ import noImg from '/public/assets/img/noImg.jpg';
 import { Suspense } from 'react';
 import db from '../../../lib/db';
 import CustomPagination from '../../../components/pagination';
-import { BASE_IMG_URL, BASE_URL, blurImage, formatToTimeAgo } from '../../../lib/constants';
+import { BASE_IMG_URL, BASE_URL } from '../../../lib/constants';
 import BlogListCpnt from '../../../components/blog/blogList';
 import { Metadata } from 'next';
 
