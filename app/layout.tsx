@@ -10,7 +10,7 @@ import { Header, Content, Footer } from 'antd/lib/layout/layout'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import { headers } from 'next/headers'
 import {UAParser} from 'ua-parser-js'
-import { IpMetadata, PixelMetadata } from '../lib/constants'
+import { IfBuyMoreMetadata, IpMetadata, PixelMetadata, ReactionTestMetadata } from '../lib/metadatas';
 
 export const metadata = () => {
   const { get } = headers();
@@ -19,6 +19,10 @@ export const metadata = () => {
     return IpMetadata;
   }else if(get('x-pathname')?.startsWith('/tools/fixPixel')){
     return PixelMetadata;
+  }else if(get('x-pathname')?.startsWith('/tools/reactionTest')){
+    return ReactionTestMetadata;
+  }else if(get('x-pathname')?.startsWith('/tools/ifBuyMore')){
+    return IfBuyMoreMetadata;
   }
 
   return {

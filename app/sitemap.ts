@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { BASE_URL } from '../lib/constants';
 import db from '../lib/db';
 import { Blog } from '.prisma/client';
+import { menuItems } from '../components/sideabar';
 
 export async function generateSitemaps() {
   // Fetch the total number of products and calculate the number of sitemaps needed
@@ -14,13 +15,26 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
   const end = start + 49000;
   // const blogCateList = await getBlogCateList();
   // const blogList = await getBlogList({ start, end });
-  const defaultList = id === 0 ? [
-    {url: `${BASE_URL}`},
-    // {url: `${BASE_URL}/cate`},
-    {url: `${BASE_URL}/tools/ip`},
-    {url: `${BASE_URL}/tools/fixPixel`},
-    {url: `${BASE_URL}/tools/reactionTest`},
-  ] : [];
+  let defaultList =
+    id === 0
+      ? [
+          { url: `${BASE_URL}` },
+          // {url: `${BASE_URL}/cate`},
+        ]
+      : [];
+
+  menuItems.map((menu) => {
+    if (menu.children && menu.children.length > 0) {
+      defaultList = [
+        ...defaultList,
+        ...menu.children.map((child) => {
+          return { url: `${BASE_URL}${child.key}` };
+        }),
+      ];
+    } else {
+      defaultList.push({ url: `${BASE_URL}/cate/${menu.key}` });
+    }
+  });
 
   // const cateUrlList = id === 0 ? blogCateList.map((blogCate) => ({
   //   url: `${BASE_URL}/cate/${blogCate.blog_cate_id}`
