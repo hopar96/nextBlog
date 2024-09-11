@@ -93,6 +93,11 @@ export const menuItems = [
         icon: React.createElement('span', { dangerouslySetInnerHTML: { __html:  '👴🏻'} }),
         label: `반응속도 테스트`,
       },
+      {
+        key: '/tools/ifBuyMore',
+        icon: React.createElement('span', { dangerouslySetInnerHTML: { __html:  '🏄🏻'} }),
+        label: `물타기 계산기`,
+      },
     ],
   },
   /* {
