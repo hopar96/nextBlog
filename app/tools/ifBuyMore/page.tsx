@@ -5,34 +5,12 @@ import { Button, Input, Result, message } from 'antd';
 import CustomLoading from '../../../components/custom-loading';
 import Title from 'antd/es/typography/Title';
 import { BASE_URL, IntlKoNumber } from '../../../lib/constants';
-import { menuItems } from '../../../components/sideabar';
 
 export default function IfBuyMorePage() {
   const [currentAvgPrice, setCurrentAvgPrice] = useState<string>('');
   const [currentQuantity, setCurrentQuantity] = useState<string>('');
   const [buyPrice, setBuyPrice] = useState<string>('');
   const [buyQuantity, setBuyQuantity] = useState<string>('');
-
-  useEffect(() => {
-    let defaultList = [
-      { url: `${BASE_URL}` },
-      // {url: `${BASE_URL}/cate`},
-    ];
-    menuItems.map((menu) => {
-      if (menu.children && menu.children.length > 0) {
-        defaultList = [
-          ...defaultList,
-          ...menu.children.map((child) => {
-            return { url: `${BASE_URL}${child.key}` };
-          }),
-        ];
-      } else {
-        defaultList.push({ url: `${BASE_URL}/cate/${menu.key}` });
-      }
-    });
-    console.log(defaultList);
-
-  }, []);
 
   const onChangeInputs = (e: React.ChangeEvent<HTMLInputElement>, _setState: Dispatch<SetStateAction<any>>) => {
     const { value: inputValue } = e.target;

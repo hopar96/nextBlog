@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { API_URL } from '../../lib/constants';
-import { menuItems } from '../../components/sideabar';
+import { API_URL, MenuItems } from '../../lib/constants';
+
 import { redirect, useRouter } from 'next/navigation';
 import { Card } from 'antd';
 import Title from 'antd/es/typography/Title';
@@ -41,7 +41,7 @@ export default function Home() {
         <Title level={1}>대시보드</Title>
         <div className="w-[100%] grid-cols-4">
           <div>
-            {menuItems.map((menu, idx) => (
+            {MenuItems.map((menu, idx) => (
               <Card
                 key={idx}
                 title={menu.label}

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 import React, { useEffect, useState } from 'react';
+import { MenuItems } from '../lib/constants';
 
 export default function SideBar({ isMobile }: { isMobile: boolean }) {
   const router = useRouter();
@@ -62,102 +63,8 @@ export default function SideBar({ isMobile }: { isMobile: boolean }) {
           <span className="logo">Is Just Blog</span>
         </Link>
       </div>
-      <Menu theme="dark" mode="inline" selectedKeys={[String(selectKey)]} items={menuItems} onClick={onClickMenu} />
+      <Menu theme="dark" mode="inline" selectedKeys={[String(selectKey)]} items={MenuItems} onClick={onClickMenu} />
     </Sider>
   );
 }
 
-export const menuItems = [
-  {
-    key: '/tools',
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🛠️' } }),
-    label: `도구 모음`,
-    children: [
-      /* {
-        key: '/tools/calcul',
-        icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🛠️' } }),
-        label: `계산기`,
-      }, */
-      {
-        key: '/tools/ip',
-        icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '📡' } }),
-        label: `내 IP 확인`,
-      },
-      {
-        key: '/tools/fixPixel',
-        icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🖥️' } }),
-        label: `죽은픽셀 살리기`,
-      },
-      {
-        key: '/tools/reactionTest',
-        icon: React.createElement('span', { dangerouslySetInnerHTML: { __html:  '👴🏻'} }),
-        label: `반응속도 테스트`,
-      },
-      {
-        key: '/tools/ifBuyMore',
-        icon: React.createElement('span', { dangerouslySetInnerHTML: { __html:  '🏄🏻'} }),
-        label: `물타기 계산기`,
-      },
-    ],
-  },
-  /* {
-    key: String(1),
-    icon: React.createElement(SmileOutlined),
-    label: `유머`,
-  },
-  {
-    key: String(2),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🙆‍♂️' } }),
-    label: `노하우`,
-  },
-  {
-    key: String(3),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '' } }),
-    label: `스토리`,
-  },
-  {
-    key: String(4),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🎬' } }),
-    label: `연예가이슈`,
-  },
-  {
-    key: String(5),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '👨‍⚖️' } }),
-    label: `정치`,
-  },
-  {
-    key: String(6),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '💰' } }),
-    label: `경제`,
-  },
-  {
-    key: String(7),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '' } }),
-    label: `사회`,
-  },
-  {
-    key: String(8),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🥊' } }),
-    label: `사건사고`,
-  },
-  {
-    key: String(9),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '⚽️' } }),
-    label: `스포츠`,
-  },
-  {
-    key: String(10),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '🐶' } }),
-    label: `애완동물`,
-  },
-  {
-    key: String(11),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '👨🏻‍🦱🎬' } }),
-    label: `해외연예`,
-  },
-  {
-    key: String(12),
-    icon: React.createElement('span', { dangerouslySetInnerHTML: { __html: '' } }),
-    label: `해외뉴스`,
-  }, */
-];

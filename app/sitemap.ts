@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next';
-import { BASE_URL } from '../lib/constants';
+import { BASE_URL, MenuItems } from '../lib/constants';
 import db from '../lib/db';
 import { Blog } from '.prisma/client';
-import { menuItems } from '../components/sideabar';
 
 export async function generateSitemaps() {
   // Fetch the total number of products and calculate the number of sitemaps needed
@@ -23,7 +22,7 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
         ]
       : [];
 
-  menuItems.map((menu) => {
+  MenuItems.map((menu) => {
     if (menu.children && menu.children.length > 0) {
       defaultList = [
         ...defaultList,
