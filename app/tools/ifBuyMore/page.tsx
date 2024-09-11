@@ -109,7 +109,7 @@ export default function IfBuyMorePage() {
               </div>
               <div className="pt-8">
                 <Title level={5}> {getIfBuyMorePrice()}</Title>
-                {getIfBuyMoreTotPrice() && <Title level={5}>물타기 총 매수 비용 : {getIfBuyMoreQuantity()}</Title>}
+                {getIfBuyMoreTotPrice() && <Title level={5}>물타기 총 매수 비용 : {getIfBuyMoreTotPrice()}</Title>}
                 {getIfBuyMoreQuantity() && <Title level={5}>물타기 보유 수량 : {getIfBuyMoreQuantity()}</Title>}
               </div>
             </div>
